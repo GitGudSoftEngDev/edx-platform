@@ -309,7 +309,7 @@ FEATURES = {
     # .. toggle_target_removal_date: None
     # .. toggle_warnings: The login MFE domain name should be listed in LOGIN_REDIRECT_WHITELIST.
     # .. toggle_tickets: None
-    'SKIP_EMAIL_VALIDATION': False,
+    'SKIP_EMAIL_VALIDATION': True,
 
     # .. toggle_name: ENABLE_COSMETIC_DISPLAY_PRICE
     # .. toggle_implementation: DjangoSetting
