@@ -18,7 +18,7 @@ course_mode_class = course_mode if course_mode else ''
 
                 <span style = "margin-top: 20px; margin-bottom: 6.5%" class="accomplishment-type-symbol">
                   <!--  <img class="src" src="/static/certificates/images/ico-${course_mode_class}.png" alt="Image for course mode of type ${course_mode_class}"> -->
-                  <img style="width: 104% !important; max-width: 104% !important;" class="src" src="/static/certificates/images/Robbo-scratch-olympiad.png" alt="Image for course mode of type ${course_mode_class}">
+                  <img style="width: 95% !important; max-width: 95% !important;" class="src" src="/static/certificates/images/Robbo-scratch-olympiad.png" alt="Image for course mode of type ${course_mode_class}">
                 </span>
 
             </div>
@@ -39,7 +39,7 @@ course_mode_class = course_mode if course_mode else ''
                     % if certificate_data:
                         % for signatory in certificate_data.get('signatories', []):
                             % if signatory.get('signature_image_path'):
-                                <span class="accomplishment-statement-detail copy copy-lead-middle"> <strong>"Дисциплина: ${signatory['title']}"</strong></span>
+                                <span class="accomplishment-statement-detail copy copy-lead-middle"> <strong>"Дисципли1на: ${signatory['title']}"</strong></span>
                             % endif
                         % endfor
                     % endif
