@@ -21,6 +21,11 @@
 
     margin: 0 auto;
 
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
     p,
     ol,
     ul {
@@ -52,16 +57,20 @@
       font-style: normal;
     }
 
-    // colophon
+    // colophon — по левому краю
     .colophon {
-      @include span-columns(8);
+      flex: 0 0 auto;
+      max-width: 50%;
+      text-align: left;
 
       @include media($bp-small) {
-        @include fill-parent();
+        flex: 1 1 100%;
+        max-width: none;
       }
 
       @include media($bp-tiny) {
-        @include fill-parent();
+        flex: 1 1 100%;
+        max-width: none;
       }
 
 
@@ -191,22 +200,32 @@
 
     // platform Open edX logo and link
     .footer-about-openedx {
-      @include span-columns(4);
-      @include text-align(right);
-
-      vertical-align: bottom;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
 
       @include media($bp-small) {
-        @include fill-parent();
+        position: static;
+        transform: none;
+        flex: 1 1 100%;
+        margin-top: ($baseline*1);
       }
 
       @include media($bp-tiny) {
-        @include fill-parent();
+        position: static;
+        transform: none;
+        flex: 1 1 100%;
+        margin-top: ($baseline*1);
       }
 
       a {
-        @include float(right);
-
+        float: none;
         display: inline-block;
 
         &:hover {
