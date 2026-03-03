@@ -1,0 +1,33 @@
+---
+description: Архитектура edx-platform (LMS, CMS, лендинг, конфиг). При изменении архитектуры обновляй этот файл.
+alwaysApply: true
+---
+
+# Архитектура edx-platform
+
+## Уровни репозитория
+
+- **lms/** — студенческий портал: маршруты, courseware, шаблоны LMS. Точка входа по умолчанию для учащихся.
+- **cms/** — Studio: авторство курсов и контента. Отдельное Django-приложение.
+- **common/** — общий код (student, util, статика). Используется и LMS, и CMS.
+- **openedx/** — ядро Open edX: site_configuration, theming, feature flags, плагины. Расширения без правок lms/cms.
+- **themes/** — темы (переопределение шаблонов и статики). Структура: `themes/<theme_name>/lms|cms/templates/`, `static/`.
+- **conf/** — локализация, общие конфиги.
+- **docs/** — документация; `docs/guides/extension_points.rst` — точки расширения.
+
+## Лендинг и главная страница (LMS)
+
+1. **Маршрут:** `lms/urls.py` — корень `'^$'` → `branding_views.index` (name='root').
+2. **Логика:** `lms/djangoapps/branding/views.py` — `index()`: редирект на dashboard или маркетинг (MKTG_URLS) либо вызов `student_views.index()`.
+3. **Рендер каталога:** `common/djangoapps/student/views/management.py` — `index()`: контекст (courses, overlay, promo) → шаблон `index.html`.
+4. **Шаблоны:** `lms/templates/index.html`, `index_overlay.html`, `index_promo_video.html`, `courses_list.html`. Тема может подменить любой из них через `themes/<name>/lms/templates/`.
+
+## Конфигурация и расширяемость
+
+- **Настройки по умолчанию:** `lms/envs/common.py`, `cms/envs/common.py` — FEATURES, MKTG_URLS, HOMEPAGE_*, ENABLE_*.
+- **По сайту (multi-tenant):** `openedx/core/djangoapps/site_configuration` — модель `SiteConfiguration.site_values` (JSON). Переопределение через `configuration_helpers.get_value()` (homepage_overlay_html, ENABLE_MKTG_SITE и др.).
+- **Темизация:** `openedx/core/djangoapps/theming/helpers.py` — `get_template_path()`, `get_template_path_with_theme()`. Выбор шаблона по текущему сайту/теме.
+
+## Обязательное правило
+
+**При любом изменении архитектуры** (новые маршруты главной страницы, перенос логики между lms/cms/openedx, новые точки расширения, смена мест шаблонов или конфига) — **обнови этот файл правил**, чтобы описание соответствовало коду.
