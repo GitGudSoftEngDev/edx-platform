@@ -16,7 +16,7 @@ course_mode_class = course_mode if course_mode else ''
 
             <div class="accomplishment-type">
                 
-                <span style = "margin-top: 35px; margin-bottom: 8.5%" class="accomplishment-type-symbol">
+                <span style = "margin-top: 20px; margin-bottom: 6.5%" class="accomplishment-type-symbol">
                   <!--  <img class="src" src="/static/certificates/images/ico-${course_mode_class}.png" alt="Image for course mode of type ${course_mode_class}"> -->
                   <img style="width: 104% !important; max-width: 104% !important;" class="src" src="/static/certificates/images/Robbo-scratch-olympiad.png" alt="Image for course mode of type ${course_mode_class}">
                 </span>
@@ -26,7 +26,7 @@ course_mode_class = course_mode if course_mode else ''
             </div>
 
             <div class="wrapper-statement-and-signatories-top">
-                <div style="margin-left: 5% !important; margin-right: 5% !important; margin-bottom: 100px;" class="accomplishment-statement-left">
+                <div style="margin-left: 5% !important; margin-right: 5% !important; margin-bottom: 50px;" class="accomplishment-statement-left">
 
                     <p style = "white-space: pre; width: 100%; max-width: 100%;" class="accomplishment-type-label hd-3-s"> C E R T I F I C A T E  O F  C O M P L E T I O N</p> 
 
@@ -37,7 +37,7 @@ course_mode_class = course_mode if course_mode else ''
                     </p>
                     <p style="margin-left: 28% !important; max-width: 69% !important; border-bottom: 2px dotted gray; margin-bottom: 30px !important;" class="accomplishment-summary copy copy-lead">&nbsp;</p>
 
-                    <p style="line-height: 0 !important; margin-bottom: 25px !important;" class="accomplishment-statement-detail copy copy-lead-middle">has successfully completed  Scratch Olympiad 2025 expert training course</p> 
+                    <p style="line-height: 0 !important; margin-bottom: 25px !important;" class="accomplishment-statement-detail copy copy-lead-middle">has successfully completed  Scratch Olympiad 2026 expert training course</p> 
                     % if certificate_data:
                         % for signatory in certificate_data.get('signatories', []):
                             % if signatory.get('signature_image_path'):
@@ -65,7 +65,7 @@ course_mode_class = course_mode if course_mode else ''
                                         <div style="justify-content: space-between !important; margin-bottom: -15px !important;" class="signatory">
                                                                                       
                                             <!--<div style = "width: 33.333%" class="metadata accomplishment-id">
-                                              <p class="label-hashtag">#ScratchOlympiad 2023:</p>
+                                              <p class="label-hashtag">#ScratchOlympiad 2026:</p>
                                             </div>
                                             <div style = "width: 33.333%" class="metadata accomplishment-id">
                                                !!!!!!!!!!!!!!!!! <img class="signatory-signature" src="${static.url(signatory['signature_image_path'])}" alt="${signatory['name']}"> 
