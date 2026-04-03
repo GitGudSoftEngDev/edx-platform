@@ -1,0 +1,149 @@
+---
+description: OpenEdx Koa LMS architecture overview. Update this file whenever the architecture changes (new apps, URL patterns, template structure, SCSS layout, theming config, plugin entry points).
+alwaysApply: true
+---
+
+# OpenEdx Koa LMS Architecture
+
+**Stack**: OpenEdx Koa release · Tutor 11.1.0 · Django + Mako templates + SCSS
+
+> **Maintenance rule**: Update this file whenever you add or remove Django apps, change URL routing, modify the template hierarchy, restructure SCSS, or touch theming/plugin configuration.
+
+---
+
+## Top-Level Repository Layout
+
+| Directory | Role |
+|---|---|
+| `lms/` | Student-facing Learning Management System |
+| `cms/` | Studio — course authoring tool |
+| `openedx/` | Canonical new code (all new apps go here) |
+| `common/` | Legacy shared code (being migrated to `openedx/`) |
+| `themes/` | Comprehensive theme overrides (`red-theme`, `edx.org`, `open-edx`, etc.) |
+| `requirements/` | Python dependency files |
+| `setup.py` | Plugin/XBlock entry points |
+| `webpack.*.config.js` | Frontend asset bundling |
+
+---
+
+## Key Django App Groups
+
+### `lms/djangoapps/` — LMS-Specific Apps
+- `branding/` — homepage view, footer API (`get_footer`)
+- `courseware/` — course delivery, XBlock rendering
+- `grades/` — grade computation and storage
+- `certificates/` — certificate generation
+- `discussion/` — discussion REST API
+- `learner_dashboard/` — program/course list for students
+- `mobile_api/` — mobile REST API
+- `verify_student/` — ID verification
+
+### `openedx/core/djangoapps/` — Core Shared Apps
+- `theming/` — comprehensive theming engine
+- `user_authn/` — login, registration, password reset
+- `site_configuration/` — per-site config (`SiteConfiguration` model)
+- `enrollments/` — enrollment REST API
+- `content/course_overviews/` — cached `CourseOverview` model
+
+### `common/djangoapps/` — Legacy Shared Apps
+- `student/` — user registration, enrollment, roles, dashboard
+- `edxmako/` — Mako template backend
+- `course_modes/` — audit/verified/honor enrollment modes
+- `third_party_auth/` — SAML/OAuth2 social login
+
+### `common/lib/`
+- `xmodule/` — core XBlock types (video, problem, html, sequence)
+- `capa/` — CAPA problem engine
+
+---
+
+## URL Routing
+
+| File | Purpose |
+|---|---|
+| `lms/urls.py` | LMS root URL conf |
+| `cms/urls.py` | Studio root URL conf |
+
+Key LMS routes:
+- `^$` → `lms.djangoapps.branding.views` (homepage / landing page)
+- `^dashboard` → `common.djangoapps.student`
+- `^courses/<key>/courseware/` → `courseware.views.index.CoursewareIndex`
+- `^api/enrollment/v1/` → `openedx.core.djangoapps.enrollments.urls`
+- `^oauth2/` → `openedx.core.djangoapps.oauth_dispatch.urls`
+- Plugin URLs appended via `get_plugin_url_patterns(ProjectType.LMS)`
+
+---
+
+## Settings Hierarchy
+
+```
+lms/envs/common.py       ← all defaults, INSTALLED_APPS, FEATURES, TEMPLATES
+    └── lms/envs/production.py   ← production overrides (reads YAML env)
+    └── lms/envs/devstack.py     ← local devstack overrides
+```
+
+Key settings:
+- `ENABLE_COMPREHENSIVE_THEMING` — master on/off for theming
+- `COMPREHENSIVE_THEME_DIRS` — list of paths containing theme directories
+- `DEFAULT_SITE_THEME` — fallback theme when no `SiteTheme` is assigned
+
+---
+
+## Template Loading Order
+
+1. `ThemeTemplateLoader` → `themes/<active-theme>/lms/templates/` (if themed)
+2. `lms/templates/` — LMS Mako templates
+3. `common/templates/` — shared Mako templates
+
+**Key templates**:
+- `lms/templates/main.html` — master layout; line 192 contains `<div class="content-wrapper main-container" id="content" dir=...>`
+- `lms/templates/index.html` — landing page for unauthenticated users (body class `view-index`)
+- `lms/templates/footer.html` — footer with org logo, innovation fond logo, OpenEdX logo
+- `lms/templates/header.html` — site header
+
+---
+
+## SCSS Structure
+
+```
+lms/static/sass/
+├── lms-main-v1.scss            ← main LMS stylesheet entry point
+├── base/
+│   ├── _base.scss              ← .content-wrapper base rule (centering, max-width)
+│   └── _layouts.scss           ← page-specific overrides (e.g. body.view-index)
+├── bootstrap/
+│   └── _layouts.scss           ← Bootstrap variant of .content-wrapper
+├── shared/
+│   └── _footer.scss            ← footer styles (.wrapper-logo, .innovation-fond-logo)
+└── _variables.scss             ← SCSS variables ($baseline, $container-max-widths, etc.)
+```
+
+After any SCSS change, recompile on the remote server:
+```bash
+tutor local run lms python manage.py lms compile_sass
+```
+
+---
+
+## Comprehensive Theming
+
+Implemented in `openedx/core/djangoapps/theming/`.
+
+- Theme directory mirrors the repo tree: `themes/<name>/lms/templates/` and `themes/<name>/lms/static/`
+- `SiteTheme` model maps a Django `Site` to a theme directory name
+- `CurrentSiteThemeMiddleware` attaches the active theme to each request
+- `ThemeTemplateLoader` prepends the theme's template dir to the search path
+- `compile_sass` management command compiles per-theme SCSS
+
+---
+
+## Plugin / Extension System (`setup.py`)
+
+| Entry Point | Purpose |
+|---|---|
+| `lms.djangoapp` | Auto-install a Django app into the LMS |
+| `cms.djangoapp` | Auto-install a Django app into Studio |
+| `openedx.course_tab` | Register a custom course tab |
+| `openedx.course_tool` | Register a course tool widget |
+| `openedx.user_partition_scheme` | Register a user partition type |
+| `openedx.block_structure_transformer` | Register a course block transformer |

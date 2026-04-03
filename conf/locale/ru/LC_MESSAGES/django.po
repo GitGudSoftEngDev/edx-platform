@@ -9740,7 +9740,7 @@ msgstr ""
 #: lms/templates/instructor/edx_ace/enrollenrolled/email/subject.txt
 #, python-format
 msgid "You have been enrolled in %(course_name)s"
-msgstr ""
+msgstr "Вы записаны на курс %(course_name)s"
 
 #: lms/templates/instructor/edx_ace/addbetatester/email/body.html
 #, python-format
@@ -9752,11 +9752,11 @@ msgstr ""
 
 #: lms/templates/instructor/edx_ace/addbetatester/email/body.html
 msgid "The invitation has been sent by a member of the course staff."
-msgstr ""
+msgstr "Вам пришло приглашение от персонала курса."
 
 #: lms/templates/instructor/edx_ace/addbetatester/email/body.html
 msgid "To start accessing course materials, please visit:"
-msgstr ""
+msgstr "Для получения доступа к материалам курса, пожалуйста, посетите:"
 
 #: lms/templates/instructor/edx_ace/addbetatester/email/body.html
 msgid "To enroll in this course and begin the beta test:"
@@ -9765,12 +9765,12 @@ msgstr ""
 #: lms/templates/instructor/edx_ace/addbetatester/email/body.html
 #, python-format
 msgid "Visit %(course_name)s"
-msgstr ""
+msgstr "Посетите %(course_name)s"
 
 #: lms/templates/instructor/edx_ace/addbetatester/email/body.html
 #, python-format
 msgid "Visit %(site_name)s"
-msgstr ""
+msgstr "Посетите %(site_name)s"
 
 #: lms/templates/instructor/edx_ace/addbetatester/email/body.html
 #: lms/templates/instructor/edx_ace/addbetatester/email/body.txt
@@ -9784,6 +9784,7 @@ msgstr ""
 msgid ""
 "This email was automatically sent from %(site_name)s to %(email_address)s"
 msgstr ""
+"Данное письмо было автоматически отправлено от %(site_name)s на почту %(email_address)s"
 
 #: lms/templates/instructor/edx_ace/addbetatester/email/body.txt
 #: lms/templates/instructor/edx_ace/enrolledunenroll/email/body.txt
@@ -9791,7 +9792,7 @@ msgstr ""
 #: lms/templates/instructor/edx_ace/removebetatester/email/body.txt
 #, python-format
 msgid "Dear %(full_name)s"
-msgstr ""
+msgstr "Уважаемый/ая %(full_name)s"
 
 #: lms/templates/instructor/edx_ace/addbetatester/email/body.txt
 #, python-format
@@ -9834,6 +9835,7 @@ msgid ""
 "You have been invited to join %(course_name)s at %(site_name)s by a member "
 "of the course staff."
 msgstr ""
+"Вас пригласили записаться на курс %(course_name)s на сайте %(site_name)s."
 
 #: lms/templates/instructor/edx_ace/allowedenroll/email/body.html
 msgid "To access this course click on the button below and login:"
@@ -9849,10 +9851,12 @@ msgid ""
 "Please finish your registration and fill out the registration form making "
 "sure to use %(email_address)s in the Email field:"
 msgstr ""
+"Пожалуйста, завершите регистрацию. При заполнении регистрационной формы "
+"убедитесь, что Вы используете %(email_address)s при регистрации:"
 
 #: lms/templates/instructor/edx_ace/allowedenroll/email/body.html
 msgid "Finish Your Registration"
-msgstr ""
+msgstr "Завершить регистрацию"
 
 #: lms/templates/instructor/edx_ace/allowedenroll/email/body.html
 #: lms/templates/instructor/edx_ace/allowedenroll/email/body.txt
@@ -9861,6 +9865,8 @@ msgid ""
 "Once you have registered and activated your account, you will see "
 "%(course_name)s listed on your dashboard."
 msgstr ""
+"Как только вы зарегистрируетесь и активируете ваш аккаунт, вы увидите "
+"%(course_name)s в вашем списке курсов."
 
 #: lms/templates/instructor/edx_ace/allowedenroll/email/body.html
 msgid ""
@@ -9959,7 +9965,7 @@ msgstr "Это не повлияет на ваши остальные курсы
 #: lms/templates/instructor/edx_ace/enrollenrolled/email/body.txt
 #, python-format
 msgid "This email was automatically sent from %(site_name)s to %(full_name)s"
-msgstr ""
+msgstr "Это письмо было автоматически отправлено от %(site_name)s на почту %(full_name)s"
 
 #: lms/templates/instructor/edx_ace/enrollenrolled/email/body.html
 #, python-format
