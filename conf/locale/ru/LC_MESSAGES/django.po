@@ -14431,6 +14431,10 @@ msgstr "Настроить режим предварительного прос�
 msgid "You are now viewing the course as {i_start}{user_name}{i_end}."
 msgstr "Вы просматриваете курс под именем {i_start}{user_name}{i_end}."
 
+#: lms/templates/preview_menu.html
+msgid "View in Studio"
+msgstr "Перейти в Студию."
+
 #: lms/templates/problem.html
 msgid "You have used {num_used} of {num_total} attempt"
 msgid_plural "You have used {num_used} of {num_total} attempts"
@@ -14759,11 +14763,15 @@ msgstr ""
 msgid "Important!"
 msgstr "Важно!"
 
+#. Translators: A button for showing the Previous Unit
 #: lms/templates/seq_module.html
+msgctxt "unit"
 msgid "Previous"
 msgstr "Назад"
 
+#. Translators: A button for showing the Next Unit
 #: lms/templates/seq_module.html
+msgctxt "unit"
 msgid "Next"
 msgstr "Вперёд"
 
