@@ -201,3 +201,218 @@ $learn-more-horizontal-position: calc(50% - 100px); // calculate the left positi
     margin-right: 34px;
   }
 }
+
+body.view-index.robbo-landing {
+  background: #f7f7f7;
+
+  .content-wrapper.main-container {
+    max-width: none;
+    padding: 0;
+  }
+
+  .robbo-home {
+    color: #1f1f1f;
+    font-family: $font-family-sans-serif;
+  }
+
+  .robbo-hero {
+    position: relative;
+    background: linear-gradient(145deg, #0d5f2b, #019f39);
+    color: $white;
+    min-height: 440px;
+    padding: 24px 0 48px;
+    overflow: hidden;
+
+    .outer-wrapper {
+      position: relative;
+      z-index: 2;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+  }
+
+  .robbo-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.22);
+  }
+
+  .robbo-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    margin-bottom: 56px;
+
+    a {
+      color: $white;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+  }
+
+  .heading-group {
+    max-width: 760px;
+
+    h1 {
+      color: $white;
+      font-size: 46px;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      text-transform: none;
+    }
+
+    p {
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 20px;
+      line-height: 1.45;
+      margin-bottom: 0;
+    }
+  }
+
+  .robbo-hero-cta {
+    margin-top: 26px;
+  }
+
+  .btn-register {
+    display: inline-block;
+    background: #ff6f00;
+    border: 1px solid #ff6f00;
+    color: $white;
+    border-radius: 4px;
+    padding: 11px 20px;
+    text-decoration: none;
+    font-weight: 600;
+
+    &:hover,
+    &:focus {
+      background: #f06500;
+      border-color: #f06500;
+      color: $white;
+    }
+  }
+
+  .robbo-section {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 52px 24px;
+    background: $white;
+    border-bottom: 1px solid #ececec;
+
+    h2 {
+      color: #1e1e1e;
+      margin-bottom: 18px;
+      text-transform: none;
+    }
+
+    p {
+      color: #3c3c3c;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+  }
+
+  .robbo-program-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+
+    article {
+      border: 1px solid #e7e7e7;
+      border-radius: 6px;
+      padding: 18px;
+      background: #fbfbfb;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      text-transform: none;
+      font-size: 22px;
+    }
+  }
+
+  .robbo-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+
+    form {
+      border: 1px solid #e7e7e7;
+      border-radius: 6px;
+      padding: 20px;
+      background: #fbfbfb;
+    }
+
+    h3 {
+      margin-bottom: 12px;
+      text-transform: none;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #3d3d3d;
+      font-weight: 500;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 8px;
+    }
+  }
+
+  .robbo-benefits ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .robbo-benefits li {
+    margin-bottom: 14px;
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.6;
+
+    &::before {
+      content: "•";
+      color: #019f39;
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-weight: 700;
+    }
+  }
+
+  .robbo-courses {
+    background: #f4f8f5;
+
+    .courses-container {
+      padding-top: 8px;
+    }
+  }
+
+  .robbo-register-final {
+    text-align: center;
+    background: #ffffff;
+    border-bottom: 0;
+    padding-bottom: 70px;
+  }
+
+  @media (max-width: 767px) {
+    .robbo-hero {
+      min-height: 360px;
+    }
+
+    .heading-group h1 {
+      font-size: 32px;
+    }
+
+    .heading-group p {
+      font-size: 18px;
+    }
+  }
+}

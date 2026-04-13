@@ -4,14 +4,21 @@
 <%!
 from django.utils.translation import ugettext as _
 from django.urls import reverse
-
-from openedx.core.djangolib.markup import HTML, Text
 %>
 
+<%block name="bodyclass">view-index robbo-landing</%block>
+
 <main id="main" aria-label="Content" tabindex="-1">
-    <section class="home">
-      <header>
+    <section class="robbo-home">
+      <header class="robbo-hero" id="top">
+        <div class="robbo-hero-overlay"></div>
         <div class="outer-wrapper">
+          <nav class="robbo-nav" aria-label="${_('Main')}">
+            <a href="#about">${_("О нас")}</a>
+            <a href="#program">${_("Программа")}</a>
+            <a href="#registration">${_("Регистрация")}</a>
+            <a href="#teachers">${_("Преподаватели")}</a>
+          </nav>
           <div class="title">
             <div class="heading-group">
               % if homepage_overlay_html:
@@ -20,27 +27,77 @@ from openedx.core.djangolib.markup import HTML, Text
                 <%include file="index_overlay.html" />
               % endif
             </div>
-            % if settings.FEATURES.get('ENABLE_COURSE_DISCOVERY'):
-              <div class="course-search">
-                <form method="get" action="/courses">
-                  <label><span class="sr">${_("Search for a course")}</span>
-                    <input class="search-input" name="search_query" type="text" placeholder="${_("Search for a course")}"></input>
-                  </label>
-                  <button class="search-button" type="submit">
-                    <span class="icon fa fa-search" aria-hidden="true"></span><span class="sr">${_("Search")}</span>
-                  </button>
-                </form>
-              </div>
-            % endif
-
+            <div class="robbo-hero-cta">
+              <a class="btn-register" href="${reverse('register_user')}">${_("Записаться на курс")}</a>
+            </div>
           </div>
-
-          <%include file="index_promo_video.html" />
         </div>
-
       </header>
-      <%include file="${courses_list}" />
 
+      <section id="about" class="robbo-section robbo-about">
+        <h2>${_("Курс по отечественным микроконтроллерам")}</h2>
+        <p>${_("Этот курс посвящен изучению архитектуры и программирования современных российских микроконтроллеров, включая работу с экосистемой на базе ядра RISC-V.")}</p>
+        <p>${_("Вы освоите практические навыки разработки цифровых устройств на отечественной компонентной базе для решения задач импортозамещения в робототехнике и промышленной автоматизации.")}</p>
+      </section>
+
+      <section id="program" class="robbo-section robbo-program">
+        <h2>${_("Программа")}</h2>
+        <div class="robbo-program-grid">
+          <article>
+            <h3>${_("Вводный курс, 104 часа")}</h3>
+            <p>${_("1-й год обучения")}</p>
+          </article>
+          <article>
+            <h3>${_("Базовый курс, 104 часа")}</h3>
+            <p>${_("2-й год обучения")}</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="registration" class="robbo-section robbo-registration">
+        <h2>${_("Регистрация")}</h2>
+        <div class="robbo-form-grid">
+          <form>
+            <h3>${_("Записаться на курс")}</h3>
+            <label><input type="checkbox" /> ${_("Я согласен(а) на получение рекламной рассылки")}</label>
+            <label><input type="checkbox" /> ${_("Я принимаю условия соглашения и даю согласие на обработку персональных данных")}</label>
+            <a class="btn-register" href="${reverse('register_user')}">${_("Отправить заявку")}</a>
+          </form>
+          <form>
+            <h3>${_("Записаться на курс")}</h3>
+            <label><input type="checkbox" /> ${_("Я согласен(а) на получение рекламной рассылки")}</label>
+            <label><input type="checkbox" /> ${_("Я принимаю условия соглашения и даю согласие на обработку персональных данных")}</label>
+            <a class="btn-register" href="${reverse('register_user')}">${_("Отправить заявку")}</a>
+          </form>
+        </div>
+      </section>
+
+      <section id="teachers" class="robbo-section robbo-benefits">
+        <h2>${_("РОББО подходят для тех, кто хочет:")}</h2>
+        <ul>
+          <li>${_("Развить инженерное и дизайнерское мышление, изучая алгоритмические структуры и разрабатывая поведение робота в реальных сценариях.")}</li>
+          <li>${_("Погрузиться в мир робототехники и пройти путь от идеи на экране до воплощения в реальном устройстве с 3D-моделированием и 3D-печатью.")}</li>
+          <li>${_("Познакомиться с учебными и профессиональными виртуальными средами: Robbo Scratch, TinkerCad 3D, FreeCAD, TinkerCad Circuits, AppInventor, Python.")}</li>
+        </ul>
+      </section>
+
+      <section class="robbo-section robbo-description">
+        <h2>${_("Описание курса")}</h2>
+        <p>${_("За 24 академических часа курса «Отечественные микроконтроллеры» инженеры и руководители проектов познакомятся с картой отечественных производителей, изучат особенности ARM и RISC-V и научатся подбирать аналоги для зарубежных чипов.")}</p>
+        <p>${_("Слушатели разберут применимость контроллеров «Амур» и серий К1986, освоят работу с документацией и экосистемами разработки, а также получат пошаговый алгоритм миграции схемотехники и кода на отечественную компонентную базу.")}</p>
+      </section>
+
+      % if settings.FEATURES.get('COURSES_ARE_BROWSABLE'):
+        <section class="robbo-section robbo-courses">
+          <h2>${_("Доступные курсы платформы")}</h2>
+          <%include file="${courses_list}" />
+        </section>
+      % endif
+
+      <section class="robbo-section robbo-register-final">
+        <h2>${_("Регистрация на курс")}</h2>
+        <a class="btn-register" href="${reverse('register_user')}">${_("Отправить")}</a>
+      </section>
     </section>
 </main>
 
