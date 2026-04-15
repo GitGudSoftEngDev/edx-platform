@@ -1,0 +1,36 @@
+## mako — шапка главной ROBBO: лого слева, три вкладки по центру, вход справа
+<%page expression_filter="h"/>
+<%namespace name='static' file='../static_content.html'/>
+<%! from django.utils.translation import ugettext as _ %>
+
+<a class="robbo-header-logo" href="/">
+  <picture>
+    <source srcset="${static.url('images/robbo.png')}" type="image/png" />
+    <img src="${static.url('images/robbo.svg')}" width="160" height="40" alt="ROBBO" class="robbo-header-logo-img" />
+  </picture>
+</a>
+
+<nav class="robbo-header-center-nav" aria-label="${_(u'Основная навигация')}">
+  <div class="robbo-dd mobile-nav-item hidden-mobile nav-item">
+    <button type="button" class="robbo-dd-toggle" aria-expanded="false" aria-haspopup="true" aria-controls="robbo-dd-menu-id">${_(u"О нас")}</button>
+    <ul id="robbo-dd-menu-id" class="robbo-dd-menu" role="menu">
+      <li role="none"><a role="menuitem" href="#edurobbo-about">${_(u"О нас")}</a></li>
+      <li role="none"><a role="menuitem" href="https://edurobbo.ru/doc" target="_blank" rel="noopener noreferrer">${_(u"Сведения об образовательной организации")}</a></li>
+    </ul>
+  </div>
+  <div class="mobile-nav-item hidden-mobile nav-item">
+    <a class="robbo-header-link" href="#edurobbo-program">${_(u"Программа")}</a>
+  </div>
+  <div class="mobile-nav-item hidden-mobile nav-item">
+    <a class="robbo-header-link" href="#edurobbo-register">${_(u"Регистрация")}</a>
+  </div>
+</nav>
+
+<%include file="${static.get_template_path(relative_path='header/robbo_header_auth.html')}" />
+
+<div class="hamburger-menu" role="button" aria-label=${_("Options Menu")} aria-expanded="false" aria-controls="mobile-menu" tabindex="0">
+    <span class="line"></span>
+    <span class="line"></span>
+    <span class="line"></span>
+    <span class="line"></span>
+</div>

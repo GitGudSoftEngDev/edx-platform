@@ -1,9 +1,14 @@
-// Лендинг главной страницы (аналог edurobbo.ru) — только при body.edurobbo-landing
+// Лендинг ROBBO: главная (body.edurobbo-landing) + шапка/подвал
+
+$robbo-green: #1a6b34;
+$robbo-green-light: #2e8b45;
+$robbo-bg: #f5f6f8;
+$robbo-header-break: 992px;
 
 body.edurobbo-landing {
-  // Сброс темы «cursive» для читаемости лендинга
   .global-header,
-  .edurobbo-landing-root {
+  .edurobbo-landing-root,
+  .wrapper-footer.edurobbo-footer {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
 
@@ -15,184 +20,323 @@ body.edurobbo-landing {
   }
 }
 
+// ——— Шапка ROBBO (только главная, аноним) ———
+.global-header.robbo-global-header {
+  border-bottom: 1px solid #e0e0e0;
+  background: $white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+  .main-header.robbo-main-header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: ($baseline * 0.75) ($baseline * 1.25);
+    position: relative;
+  }
+
+  .robbo-header-logo {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    margin-right: $baseline;
+
+    img,
+    picture img {
+      display: block;
+      height: 40px;
+      width: auto;
+      max-width: 180px;
+    }
+  }
+
+  .robbo-header-center-nav {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $baseline * 1.5;
+    min-width: 0;
+  }
+
+  .robbo-header-link {
+    color: $robbo-green;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    white-space: nowrap;
+    padding: ($baseline * 0.35) ($baseline * 0.5);
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+      color: #145c2d;
+    }
+  }
+
+  .robbo-dd {
+    position: relative;
+  }
+
+  .robbo-dd-toggle {
+    background: transparent;
+    border: none;
+    color: $robbo-green;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: ($baseline * 0.35) ($baseline * 0.5);
+    font-family: inherit;
+
+    &::after {
+      content: " ▾";
+      font-size: 0.75em;
+      opacity: 0.85;
+    }
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+      outline: none;
+    }
+  }
+
+  .robbo-dd-menu {
+    list-style: none;
+    margin: 0;
+    padding: ($baseline * 0.5) 0;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 280px;
+    background: $white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    z-index: 200;
+    display: none;
+
+    &.is-open {
+      display: block;
+    }
+
+    a {
+      display: block;
+      padding: ($baseline * 0.5) $baseline;
+      color: #333;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+
+      &:hover,
+      &:focus {
+        background: #f5f5f5;
+        color: $robbo-green;
+      }
+    }
+
+    li + li {
+      border-top: 1px solid #eee;
+    }
+  }
+
+  @media (min-width: $robbo-header-break) {
+    .robbo-dd:hover .robbo-dd-menu,
+    .robbo-dd:focus-within .robbo-dd-menu {
+      display: block;
+    }
+
+    // Клик по кнопке на десктопе не обязателен — меню открыто по hover; is-open дублирует для клавиатуры
+    .robbo-dd-menu.is-open {
+      display: block;
+    }
+  }
+
+  .robbo-header-auth {
+    flex: 0 0 auto;
+    margin-left: $baseline;
+
+    .secondary > div {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: $baseline * 0.5;
+    }
+
+    .btn {
+      white-space: nowrap;
+    }
+  }
+
+  .hamburger-menu {
+    order: 99;
+    margin-left: $baseline * 0.75;
+  }
+
+  @media (max-width: 991px) {
+    .robbo-header-center-nav {
+      display: none;
+    }
+
+    .main-header.robbo-main-header {
+      position: relative;
+      padding-right: $baseline * 2.5;
+    }
+
+    .hamburger-menu {
+      left: auto !important;
+      right: $baseline !important;
+      top: 50% !important;
+      margin-top: -10px;
+    }
+
+    .robbo-header-auth {
+      margin-left: auto;
+      margin-right: $baseline * 2;
+    }
+  }
+}
+
+// Мобильное меню: под пунктом «О нас» сразу ссылки, без кнопки
+.mobile-menu {
+  .robbo-dd-toggle {
+    display: none;
+  }
+
+  .robbo-dd-menu {
+    display: block !important;
+    position: static;
+    transform: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    min-width: 0;
+
+    li + li {
+      border-top: none;
+    }
+  }
+
+  .robbo-header-link {
+    display: block;
+    width: 100%;
+  }
+}
+
+// ——— Контент лендинга ———
 .edurobbo-landing-root {
-  background: #f5f6f8;
+  background: $robbo-bg;
+  padding-top: $baseline;
 }
 
 .edurobbo-landing {
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 $baseline ($baseline * 2);
-
-  @include media($bp-small) {
-    padding-left: $baseline / 2;
-    padding-right: $baseline / 2;
-  }
-}
-
-.edurobbo-tagline {
-  text-align: center;
-  font-size: 1.05rem;
-  color: #333;
-  padding: ($baseline * 1.25) $baseline ($baseline * 0.75);
-  margin: 0;
-  font-weight: 600;
-}
-
-.edurobbo-shell {
-  display: flex;
-  align-items: flex-start;
-  gap: $baseline * 2;
-
-  @include media($bp-medium) {
-    flex-direction: column;
-    gap: $baseline;
-  }
-}
-
-.edurobbo-sidebar {
-  flex: 0 0 220px;
-  position: sticky;
-  top: $baseline;
-
-  @include media($bp-medium) {
-    position: static;
-    flex: none;
-    width: 100%;
-  }
-
-  nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  nav li {
-    margin-bottom: $baseline * 0.75;
-  }
-
-  nav a {
-    color: #1a5f2a;
-    font-weight: 700;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    text-decoration: none;
-
-    &:hover,
-    &:focus {
-      text-decoration: underline;
-    }
-  }
-}
-
-.edurobbo-main {
-  flex: 1;
-  min-width: 0;
-}
-
-.edurobbo-hero {
-  background: $white;
-  border-radius: 4px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-  padding: ($baseline * 2) ($baseline * 1.5);
-  margin-bottom: $baseline * 1.5;
-}
-
-.edurobbo-hero h1 {
-  font-size: 1.75rem;
-  line-height: 1.25;
-  margin: 0 0 $baseline;
-  color: #111;
-  font-weight: 700;
-}
-
-.edurobbo-hero .edurobbo-lead {
-  font-size: 1rem;
-  line-height: 1.55;
-  color: #444;
-  margin: 0 0 $baseline * 1.25;
-}
-
-.edurobbo-btn {
-  display: inline-block;
-  padding: ($baseline * 0.65) ($baseline * 1.5);
-  background: #2a8f3c;
-  color: $white !important;
-  font-weight: 600;
-  border-radius: 4px;
-  text-decoration: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-
-  &:hover,
-  &:focus {
-    background: #237a33;
-    color: $white !important;
-    text-decoration: none;
-  }
 }
 
 .edurobbo-section {
   background: $white;
-  border-radius: 4px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-  padding: ($baseline * 1.5) ($baseline * 1.5);
+  border-radius: 6px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.07);
+  padding: ($baseline * 2) ($baseline * 1.75);
   margin-bottom: $baseline * 1.5;
 }
 
-.edurobbo-section h2 {
-  font-size: 1.2rem;
-  margin: 0 0 $baseline;
-  color: #111;
+.edurobbo-about-title {
+  text-align: center;
+  font-size: 1.35rem;
   font-weight: 700;
+  color: #111;
+  margin: 0 0 ($baseline * 2);
+  line-height: 1.35;
 }
 
-.edurobbo-benefits {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.edurobbo-triplet {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: ($baseline * 2) $baseline;
+  align-items: flex-start;
+}
 
-  li {
-    margin-bottom: $baseline * 1.1;
-    padding-left: $baseline * 0.25;
-    line-height: 1.55;
-    color: #333;
+.edurobbo-triplet-item {
+  flex: 1 1 260px;
+  max-width: 320px;
+  text-align: center;
+}
 
-    strong {
-      color: #111;
-    }
+.edurobbo-triplet-icon {
+  margin: 0 auto ($baseline * 1.25);
+  width: 120px;
+  height: 120px;
+
+  img {
+    width: 120px;
+    height: 120px;
+    display: block;
+    margin: 0 auto;
   }
+}
+
+.edurobbo-triplet-text {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: #333;
+  text-align: center;
+}
+
+.edurobbo-program-heading,
+.edurobbo-register-heading {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 $baseline;
+  text-align: center;
 }
 
 .edurobbo-course-desc {
-  line-height: 1.6;
+  line-height: 1.65;
   color: #444;
   margin: 0;
+  font-size: 1rem;
+  text-align: center;
 }
 
 .edurobbo-form {
-  label.edurobbo-label {
+  max-width: 480px;
+  margin: 0 auto;
+
+  .edurobbo-label {
     display: block;
     font-weight: 600;
     margin-bottom: $baseline * 0.35;
+    margin-top: $baseline;
     color: #333;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
   }
 
-  select.edurobbo-input {
+  .edurobbo-text-input {
     width: 100%;
-    max-width: 420px;
-    padding: ($baseline * 0.5) $baseline;
-    margin-bottom: $baseline * 1.25;
+    box-sizing: border-box;
+    padding: ($baseline * 0.55) $baseline;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 1rem;
-    background: $white;
+    font-family: inherit;
   }
 
   .edurobbo-checkbox-row {
-    margin-bottom: $baseline * 0.85;
+    margin-top: $baseline * 1;
+    margin-bottom: $baseline * 0.75;
     display: flex;
     align-items: flex-start;
     gap: $baseline * 0.5;
@@ -211,31 +355,113 @@ body.edurobbo-landing {
   }
 
   .edurobbo-form-actions {
-    margin-top: $baseline * 1.25;
+    margin-top: $baseline * 1.5;
+    text-align: center;
   }
 }
 
+.edurobbo-btn {
+  display: inline-block;
+  padding: ($baseline * 0.65) ($baseline * 2);
+  background: $robbo-green-light;
+  color: $white !important;
+  font-weight: 600;
+  border-radius: 4px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: inherit;
+
+  &:hover,
+  &:focus {
+    background: $robbo-green;
+    color: $white !important;
+    text-decoration: none;
+  }
+}
+
+// ——— Футер ———
 .wrapper-footer.edurobbo-footer {
+  background: $white;
+  border-top: 1px solid #e0e0e0;
+  padding: ($baseline * 1.5) $baseline ($baseline * 0.75);
+
+  footer {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .edurobbo-footer-grid {
+    display: grid;
+    grid-template-columns: 1fr minmax(280px, 1.2fr) 1fr;
+    align-items: center;
+    gap: $baseline;
+    padding: 0 ($baseline * 0.5);
+
+    @include media($bp-small) {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+  }
+
+  .edurobbo-footer-logo {
+    justify-self: start;
+
+    @include media($bp-small) {
+      justify-self: center;
+    }
+
+    img {
+      display: block;
+      height: 40px;
+      width: auto;
+    }
+  }
+
+  .edurobbo-footer-center {
+    text-align: center;
+  }
+
+  .edurobbo-footer-copy {
+    margin: 0 0 ($baseline * 0.75);
+    font-size: 1rem;
+    color: #333;
+    font-weight: 600;
+  }
+
   .edurobbo-footer-legal ul {
     list-style: none;
-    margin: ($baseline * 0.5) 0 $baseline;
+    margin: 0;
     padding: 0;
     display: flex;
-    flex-wrap: wrap;
-    gap: $baseline $baseline * 1.25;
+    flex-direction: column;
+    align-items: center;
+    gap: $baseline * 0.5;
   }
 
   .edurobbo-footer-legal a {
     font-size: 0.9rem;
+    color: $robbo-green;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+    }
   }
 
-  .edurobbo-footer-copy {
-    margin-bottom: 0;
+  .edurobbo-footer-spacer {
+    @include media($bp-small) {
+      display: none;
+    }
   }
 
   .edurobbo-openedx-attribution {
-    font-size: 0.8rem;
-    margin-top: $baseline;
-    opacity: 0.85;
+    text-align: center;
+    font-size: 0.75rem;
+    margin: ($baseline * 1.25) 0 0;
+    opacity: 0.75;
+    color: #666;
   }
 }

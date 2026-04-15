@@ -1,14 +1,9 @@
 <%page expression_filter="h"/>
 <%inherit file="main.html" />
 <%namespace name='static' file='static_content.html'/>
-<%namespace file='main.html' import="login_query"/>
 <%!
-from django.conf import settings
-from django.urls import reverse
 from django.utils.translation import ugettext as _
-from openedx.core.djangolib.markup import HTML, Text
-from openedx.core.djangolib.js_utils import js_escaped_string
-from openedx.core.djangoapps.user_authn.utils import should_redirect_to_logistration_mircrofrontend
+from openedx.core.djangolib.markup import Text
 %>
 <%block name="title">
     <title>${Text(_(u"Дополнительная общеобразовательная программа «РОББОтотехника»"))}</title>
@@ -16,73 +11,64 @@ from openedx.core.djangoapps.user_authn.utils import should_redirect_to_logistra
 
 <%block name="bodyclass">view-index edurobbo-landing</%block>
 
-<%
-  should_use_reg_mfe = should_redirect_to_logistration_mircrofrontend()
-  register_href = (settings.LOGISTRATION_MICROFRONTEND_URL.rstrip('/') + '/register' + login_query()) if should_use_reg_mfe else (reverse('register_user') + login_query())
-%>
-
 <main id="main" class="edurobbo-landing-root" aria-label="${_('Content')}" tabindex="-1">
-  <p class="edurobbo-tagline">${Text(_(u"Робототехника для мальчиков и девочек от 5 до 15 лет"))}</p>
-
   <div class="edurobbo-landing">
-    <div class="edurobbo-shell">
-      <aside class="edurobbo-sidebar" aria-label="${_(u'Разделы страницы')}">
-        <nav>
-          <ul>
-            <li><a href="#edurobbo-about">${_(u"О НАС")}</a></li>
-            <li><a href="https://edurobbo.ru/doc" rel="noopener noreferrer" target="_blank">${_(u"СВЕДЕНИЯ ОБ ОБРАЗОВАТЕЛЬНОЙ ОРГАНИЗАЦИИ")}</a></li>
-          </ul>
-        </nav>
-      </aside>
 
-      <div class="edurobbo-main">
-        <section id="edurobbo-about" class="edurobbo-hero">
-          <h1>${_(u"Курс по отечественным микроконтроллерам")}</h1>
-          <p class="edurobbo-lead">${Text(_(u"Этот курс посвящен изучению архитектуры и программирования современных российских микроконтроллеров, включая работу с экосистемой на базе ядра RISC-V. Вы освоите практические навыки разработки цифровых устройств на отечественной компонентной базе для решения задач импортозамещения в робототехнике и промышленной автоматизации."))}</p>
-          <p><a class="edurobbo-btn" href="#edurobbo-register">${_(u"Регистрация")}</a></p>
-        </section>
-
-        <section class="edurobbo-section" aria-labelledby="edurobbo-benefits-heading">
-          <h2 id="edurobbo-benefits-heading">${_(u"РОББО подходят для тех, кто хочет:")}</h2>
-          <ul class="edurobbo-benefits">
-            <li><strong>${_(u"Развить инженерное и дизайнерское мышление,")}</strong> ${Text(_(u"изучая алгоритмические структуры и разрабатывая алгоритмы поведения робота/ персонажа/ человека в конкретных ситуациях повседневной жизни"))}</li>
-            <li><strong>${_(u"Погрузиться в мир робототехники")}</strong> ${Text(_(u"и пройти весь путь — от создания образа робота на экране до программирования и воплощения его в реальности своими руками при помощи 3D-моделирования и 3D-печати"))}</li>
-            <li><strong>${_(u"Познакомиться с учебными и профессиональными виртуальными средами —")}</strong> ${Text(_(u"Robbo Scratch, TinkerCad 3D, FreeCad, TinkerCadCircuits, AppInventor, Python"))}</li>
-          </ul>
-        </section>
-
-        <section id="edurobbo-program" class="edurobbo-section">
-          <h2>${_(u"Описание курса")}</h2>
-          <p class="edurobbo-course-desc">${Text(_(u"За 24 академических часа курса «Отечественные микроконтроллеры» инженеры и руководители проектов познакомятся с актуальной картой отечественных производителей (Микрон, Миландр, НИИЭТ), изучат архитектурные особенности ядер ARM и RISC-V и научатся подбирать аналоги для зарубежных чипов. Слушатели разберут реальную применимость контроллеров «Амур» и серий К1986, освоят специфику работы с документацией и экосистемами разработки, а также получат пошаговый алгоритм миграции схемотехники и кода на отечественную компонентную базу. Программа в асинхронном формате позволит пройти путь от анализа требований Минпромторга до формирования стратегии портирования промышленного ПО на российские кристаллы."))}</p>
-        </section>
-
-        <section id="edurobbo-register" class="edurobbo-section">
-          <h2>${_(u"Регистрация на курс")}</h2>
-          <form class="edurobbo-form" id="edurobbo-register-form" action="#" method="get" novalidate>
-            <label class="edurobbo-label" for="edurobbo-course-track">${_(u"Программа")}</label>
-            <select id="edurobbo-course-track" class="edurobbo-input" name="course_track" aria-required="false">
-              <option value="">${_(u"Выберите вариант")}</option>
-              <option>${_(u"Вводный курс, 104 часа (1-й год обучения)")}</option>
-              <option>${_(u"Базовый курс, 104 часа (2-й год обучения)")}</option>
-              <option>${_(u"Отечественные микроконтроллеры, 24 академических часа")}</option>
-            </select>
-
-            <div class="edurobbo-checkbox-row">
-              <input type="checkbox" id="edurobbo-mailing" name="mailing_ok" />
-              <label for="edurobbo-mailing">${_(u"Я согласен(а) на получение рекламной рассылки")}</label>
-            </div>
-            <div class="edurobbo-checkbox-row">
-              <input type="checkbox" id="edurobbo-privacy" name="privacy_ok" required aria-required="true" />
-              <label for="edurobbo-privacy">${Text(_(u"Я принимаю условия соглашения и даю согласие на обработку своих персональных данных на условиях политики конфиденциальности"))}</label>
-            </div>
-
-            <div class="edurobbo-form-actions">
-              <button type="submit" class="edurobbo-btn">${_(u"Отправить")}</button>
-            </div>
-          </form>
-        </section>
+    <section id="edurobbo-about" class="edurobbo-section edurobbo-section-about" aria-labelledby="edurobbo-about-heading">
+      <h2 id="edurobbo-about-heading" class="edurobbo-about-title">${_(u"РОББО подходят для тех, кто хочет:")}</h2>
+      <div class="edurobbo-triplet">
+        <div class="edurobbo-triplet-item">
+          <div class="edurobbo-triplet-icon">
+            <img src="${static.url('images/1.svg')}" width="120" height="120" alt="" />
+          </div>
+          <p class="edurobbo-triplet-text">${Text(_(u"Развить инженерное и дизайнерское мышление, изучая алгоритмические структуры и разрабатывая алгоритмы поведения робота/ персонажа/ человека в конкретных ситуациях повседневной жизни"))}</p>
+        </div>
+        <div class="edurobbo-triplet-item">
+          <div class="edurobbo-triplet-icon">
+            <img src="${static.url('images/2.svg')}" width="120" height="120" alt="" />
+          </div>
+          <p class="edurobbo-triplet-text">${Text(_(u"Погрузиться в мир робототехники и пройти весь путь — от создания образа робота на экране до программирования и воплощения его в реальности своими руками при помощи 3D-моделирования и 3D-печати"))}</p>
+        </div>
+        <div class="edurobbo-triplet-item">
+          <div class="edurobbo-triplet-icon">
+            <img src="${static.url('images/3.svg')}" width="120" height="120" alt="" />
+          </div>
+          <p class="edurobbo-triplet-text">${Text(_(u"Познакомиться с учебными и профессиональными виртуальными средами — Robbo Scratch, TinkerCad 3D, FreeCad, TinkerCadCircuits, AppInventor, Python"))}</p>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <section id="edurobbo-program" class="edurobbo-section edurobbo-section-program">
+      <h2 class="edurobbo-program-heading">${_(u"Описание курса")}</h2>
+      <p class="edurobbo-course-desc">${Text(_(u"За 24 академических часа курса «Отечественные микроконтроллеры» инженеры и руководители проектов познакомятся с актуальной картой отечественных производителей (Микрон, Миландр, НИИЭТ), изучат архитектурные особенности ядер ARM и RISC-V и научатся подбирать аналоги для зарубежных чипов. Слушатели разберут реальную применимость контроллеров «Амур» и серий К1986, освоят специфику работы с документацией и экосистемами разработки, а также получат пошаговый алгоритм миграции схемотехники и кода на отечественную компонентную базу. Программа в асинхронном формате позволит пройти путь от анализа требований Минпромторга до формирования стратегии портирования промышленного ПО на российские кристаллы."))}</p>
+    </section>
+
+    <section id="edurobbo-register" class="edurobbo-section edurobbo-section-register">
+      <h2 class="edurobbo-register-heading">${_(u"Регистрация")}</h2>
+      <form class="edurobbo-form" id="edurobbo-register-form" action="#" method="post" novalidate>
+        <label class="edurobbo-label" for="edurobbo-name">${_(u"Ваше имя")}</label>
+        <input class="edurobbo-text-input" type="text" id="edurobbo-name" name="name" autocomplete="name" />
+
+        <label class="edurobbo-label" for="edurobbo-email">${_(u"Email")}</label>
+        <input class="edurobbo-text-input" type="email" id="edurobbo-email" name="email" autocomplete="email" />
+
+        <label class="edurobbo-label" for="edurobbo-company">${_(u"Название компании")}</label>
+        <input class="edurobbo-text-input" type="text" id="edurobbo-company" name="company" autocomplete="organization" />
+
+        <div class="edurobbo-checkbox-row">
+          <input type="checkbox" id="edurobbo-mailing" name="mailing_ok" />
+          <label for="edurobbo-mailing">${_(u"Я согласен(а) на получение рекламной рассылки")}</label>
+        </div>
+        <div class="edurobbo-checkbox-row">
+          <input type="checkbox" id="edurobbo-privacy" name="privacy_ok" required aria-required="true" />
+          <label for="edurobbo-privacy">${Text(_(u"Я принимаю условия соглашения и даю согласие на обработку своих персональных данных на условиях политики конфиденциальности"))}</label>
+        </div>
+
+        <div class="edurobbo-form-actions">
+          <button type="submit" class="edurobbo-btn">${_(u"Отправить")}</button>
+        </div>
+      </form>
+    </section>
 
     <%include file="${courses_list}" />
   </div>
@@ -100,20 +86,42 @@ from openedx.core.djangoapps.user_authn.utils import should_redirect_to_logistra
    <script type="text/javascript">
       (function () {
         var form = document.getElementById('edurobbo-register-form');
-        var registerUrl = "${register_href | n, js_escaped_string}";
         if (form) {
           form.addEventListener('submit', function (e) {
             e.preventDefault();
             var privacy = document.getElementById('edurobbo-privacy');
             if (privacy && !privacy.checked) {
-              if (typeof privacy.focus === 'function') {
-                privacy.focus();
-              }
+              privacy.focus();
               return;
             }
-            window.location.href = registerUrl;
           });
         }
+        document.querySelectorAll('.robbo-dd-toggle').forEach(function (btn) {
+          var menu = btn.nextElementSibling;
+          btn.addEventListener('click', function (ev) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            var open = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+            if (menu) {
+              menu.classList.toggle('is-open', !open);
+            }
+          });
+        });
+        document.addEventListener('click', function () {
+          document.querySelectorAll('.robbo-dd-toggle').forEach(function (btn) {
+            btn.setAttribute('aria-expanded', 'false');
+            var m = btn.nextElementSibling;
+            if (m) {
+              m.classList.remove('is-open');
+            }
+          });
+        });
+        document.querySelectorAll('.robbo-dd-menu').forEach(function (m) {
+          m.addEventListener('click', function (e) {
+            e.stopPropagation();
+          });
+        });
       })();
       $(window).load(function() {
          if(getParameterByName('next')) {
@@ -124,8 +132,6 @@ from openedx.core.djangoapps.user_authn.utils import should_redirect_to_logistra
 </%block>
 
 % if show_signup_immediately is not UNDEFINED:
-  ## NOTE: This won't work in production, because anonymous views are cached, so it will
-  ## show either with or without this extra js for 3 minutes at a time.
 <script type="text/javascript">
   $(window).load(function() {$('#signup_action').trigger("click");});
 </script>

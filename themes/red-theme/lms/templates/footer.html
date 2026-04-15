@@ -3,47 +3,52 @@
 <%namespace name='static' file='static_content.html'/>
 <%!
 from django.utils.translation import ugettext as _
-from django.conf import settings
-
-from datetime import datetime
-import pytz
-
-from openedx.core.djangoapps.lang_pref.api import footer_language_selector_is_enabled
 from openedx.core.djangolib.markup import HTML, Text
+from openedx.core.djangoapps.lang_pref.api import footer_language_selector_is_enabled
 %>
 
 <div class="wrapper wrapper-footer edurobbo-footer">
   <footer>
-    <div class="colophon">
-      % if context.get('include_language_selector', footer_language_selector_is_enabled()):
-          <%include file="${static.get_template_path('widgets/footer-language-selector.html')}"/>
-      % endif
+    % if context.get('include_language_selector', footer_language_selector_is_enabled()):
+      <%include file="${static.get_template_path('widgets/footer-language-selector.html')}"/>
+    % endif
 
-      <p class="copyright edurobbo-footer-copy">&copy; ${_(u"ООО «РОББО ТЕХНОЛОГИИ»")}, ${datetime.now(pytz.timezone(settings.TIME_ZONE)).year}</p>
+    <div class="edurobbo-footer-grid">
+      <a class="edurobbo-footer-logo" href="/" aria-label="ROBBO">
+        <picture>
+          <source srcset="${static.url('images/robbo.png')}" type="image/png" />
+          <img src="${static.url('images/robbo.svg')}" width="160" height="40" alt="ROBBO" />
+        </picture>
+      </a>
 
-      <nav class="nav-legal edurobbo-footer-legal" aria-label="${_(u'Юридическая информация')}">
-        <ul>
-          <li>
-            <a href="https://edurobbo.ru/doc" rel="noopener noreferrer" target="_blank">${_(u"Сведения об образовательной организации")}</a>
-          </li>
-          <li>
-            <a href="https://docs.google.com/document/d/15z6SGcFXBizAZcwBp63eAeK0Ffjar87J4ktoibDc5qA/edit?usp=sharing" rel="noopener noreferrer" target="_blank">${_(u"Политика обработки персональных данных")}</a>
-          </li>
-          <li>
-            <a href="https://docs.google.com/document/d/1rWVXl5TK9MS2cKDHSQCKnZTj85TD5DiI3UV0eUfGpug/edit?usp=sharing" rel="noopener noreferrer" target="_blank">${_(u"Пользовательское соглашение")}</a>
-          </li>
-          <li>
-            <a href="https://docs.google.com/document/d/1grcT1q6PFYJ0LejueDmiRYmpfIwiYH82xFw71I5maXM/edit?usp=sharing" rel="noopener noreferrer" target="_blank">${_(u"Согласие на обработку персональных данных")}</a>
-          </li>
-        </ul>
-      </nav>
+      <div class="edurobbo-footer-center">
+        <p class="edurobbo-footer-copy">${_(u"© ООО «РОББО ТЕХНОЛОГИИ», 2024")}</p>
+        <nav class="edurobbo-footer-legal" aria-label="${_(u'Юридическая информация')}">
+          <ul>
+            <li>
+              <a href="https://edurobbo.ru/doc" rel="noopener noreferrer" target="_blank">${_(u"Сведения об образовательной организации")}</a>
+            </li>
+            <li>
+              <a href="https://docs.google.com/document/d/15z6SGcFXBizAZcwBp63eAeK0Ffjar87J4ktoibDc5qA/edit?usp=sharing" rel="noopener noreferrer" target="_blank">${_(u"Политика обработки персональных данных")}</a>
+            </li>
+            <li>
+              <a href="https://docs.google.com/document/d/1rWVXl5TK9MS2cKDHSQCKnZTj85TD5DiI3UV0eUfGpug/edit?usp=sharing" rel="noopener noreferrer" target="_blank">${_(u"Пользовательское соглашение")}</a>
+            </li>
+            <li>
+              <a href="https://docs.google.com/document/d/1grcT1q6PFYJ0LejueDmiRYmpfIwiYH82xFw71I5maXM/edit?usp=sharing" rel="noopener noreferrer" target="_blank">${_(u"Согласие на обработку персональных данных")}</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
 
-      <p class="copyright edurobbo-openedx-attribution">
-        ${Text(_("Powered by {link_start}Open edX{link_end}")).format(
-            link_start=HTML(u"<a href='https://openedx.org/'>"),
-            link_end=HTML(u"</a>")
-        )}
-      </p>
+      <div class="edurobbo-footer-spacer" aria-hidden="true"></div>
     </div>
+
+    <p class="edurobbo-openedx-attribution">
+      ${Text(_("Powered by {link_start}Open edX{link_end}")).format(
+          link_start=HTML(u"<a href='https://openedx.org/'>"),
+          link_end=HTML(u"</a>")
+      )}
+    </p>
   </footer>
 </div>
